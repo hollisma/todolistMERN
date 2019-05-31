@@ -1,0 +1,35 @@
+---------------------------------------------------------------
+
+MONGODB
+
+"sudo service mongod start/stop/restart" to s/s/r server.
+"mongo" to open up the mongo shell. 
+
+---------------------------------------------------------------
+
+NODE
+
+"npm init -y" to create a package.json file. Holds configurations and dependencies needed. 
+"npm install graphql-yoga" to install graphql. 
+"node index.js" runs the js in index.js. 
+
+---------------------------------------------------------------
+
+GRAPHQL
+
+server opens on localhost:4000
+in the graphql playground, do "{funcName(paramName: value)}" to get object. 
+for mutation, need to do "mutation{funcName(paramName: value) {param1}}". Second part specifies which return values and the order.
+
+---------------------------------------------------------------
+
+GIT
+
+create repo on github, then clone to desired folder via "git clone [url]". Or use git init. 
+"git add [X]" to add X file to the things being tracked.
+"git status" to see what's being tracked. 
+"git commit -m 'message'" to commit with a message. 
+"git push origin yourbranchname" to push commits to branch 'yourbranchname'. origin is alias for remote repo's URL. 
+"git pull origin master" pulls changes from origin to master branch. 
+"git log" to check out commits. 
+"git checkout [X]" to check out other branches / commits. 
