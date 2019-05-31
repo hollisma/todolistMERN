@@ -1,7 +1,7 @@
 const { GraphQLServer } = require('graphql-yoga');
 const mongoose = require('mongoose');
 
-mongoose.connect('mongodb://localhost/test');
+mongoose.connect('mongodb://localhost/test', { useNewUrlParser: true }).catch();
 
 const Todo = mongoose.model('Todo', {
 	text: String,
@@ -10,7 +10,7 @@ const Todo = mongoose.model('Todo', {
 
 const typeDefs = `
   type Query {
-    hello(name: String): String!  
+    hello(name: String): String!
     todos: [Todo]
   }
   type Todo {
@@ -20,8 +20,9 @@ const typeDefs = `
   }
   type Mutation {
     createTodo(text: String!): Todo
-    updateTodo(id: ID!, complete: Boolean!): boolean
-  }
+    updateTodo(id: ID!, complete: Boolean!): Boolean
+		removeTodo(id: ID!): Boolean
+	}
 `; // ! means required
 
 const resolvers = {
@@ -38,6 +39,10 @@ const resolvers = {
 		},
 		updateTodo: async (_, { id, complete }) => {
 			await Todo.findByIdAndUpdate(id, { complete });
+			return true;
+		},
+		removeTodo: async (_, { id }) => {
+			await Todo.findByIdAndRemove(id);
 			return true;
 		}
 	}
