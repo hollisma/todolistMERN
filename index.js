@@ -11,6 +11,7 @@ const Todo = mongoose.model('Todo', {
 const typeDefs = `
   type Query {
     hello(name: String): String!  
+    todos: [Todo]
   }
   type Todo {
     id: ID!
@@ -19,19 +20,25 @@ const typeDefs = `
   }
   type Mutation {
     createTodo(text: String!): Todo
+    updateTodo(id: ID!, complete: Boolean!): boolean
   }
 `; // ! means required
 
 const resolvers = {
 	// resolvers resolve the functions calls in the typedef
 	Query: {
-		hello: (_, { name }) => `Hello ${name || 'World'}`
+		hello: (_, { name }) => `Hello ${name || 'World'}`,
+		todos: () => Todo.find()
 	},
 	Mutation: {
 		createTodo: async (_, { text }) => {
 			const todo = new Todo({ text, complete: false });
 			await todo.save(); // await because save() is a promise. save() saves to database
 			return todo;
+		},
+		updateTodo: async (_, { id, complete }) => {
+			await Todo.findByIdAndUpdate(id, { complete });
+			return true;
 		}
 	}
 };
